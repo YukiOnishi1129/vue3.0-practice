@@ -1,0 +1,12 @@
+{
+    "folders": [
+        {
+            "name": "my-vue3-todo",
+            "path": "./my-vue3-todo"
+        },
+        {
+            "name": "Root",
+            "path": "."
+        }
+    ],
+}
