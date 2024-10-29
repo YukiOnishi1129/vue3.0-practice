@@ -3,9 +3,16 @@ import { ref } from 'vue'
 
 // inputの値と連動するリアクティブ関数を作成
 const todo = ref('')
+const todoList = ref<{ id: number; task: string }[]>([])
 
 const addTodo = () => {
-  console.log(todo.value)
+  const id = new Date().getTime()
+
+  todoList.value.push({ id: id, task: todo.value })
+  //   console.log(todo.value)
+  localStorage.todoList = JSON.stringify(todoList.value)
+
+  todo.value = ''
 }
 </script>
 
