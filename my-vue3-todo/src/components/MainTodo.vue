@@ -1,6 +1,8 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 
+import { useTodoList } from '@/composables/useTodoList'
+
 // inputの値と連動するリアクティブ関数を作成
 const todo = ref('')
 const todoList = ref<{ id: number; task: string }[]>([])
@@ -57,8 +59,7 @@ const deleteTodo = (id: number) => {
   editId = -1
   todo.value = ''
 
-  const findTodo = todoList.value.find((todo) => todo.id === id)
-  const idx = todoList.value.findIndex((todo) => todo.id === id)
+  const { findTodo, idx } = useTodoList(id)
 
   if (findTodo) {
     const delMsg = '「' + findTodo.task + '」を削除しますか？'
