@@ -1,4 +1,4 @@
-import { ref } from 'vue'
+import { computed, ref } from 'vue'
 
 export const useTodoList = () => {
   const todoList = ref<{ id: number; task: string; checked: boolean }[]>([])
@@ -10,6 +10,11 @@ export const useTodoList = () => {
   const findById = (id: number) => todoList.value.find((todo) => todo.id === id)
 
   const findIndexById = (id: number) => todoList.value.findIndex((todo) => todo.id === id)
+
+  const countFin = computed(() => {
+    const finArr = todoList.value.filter((todo) => todo.checked)
+    return finArr.length
+  })
 
   const show = (id: number) => {
     const todo = findById(id)
@@ -60,5 +65,5 @@ export const useTodoList = () => {
     }
   }
 
-  return { todoList, add, show, edit, del, check }
+  return { todoList, add, show, edit, del, check, countFin }
 }
