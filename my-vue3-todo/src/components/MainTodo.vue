@@ -4,70 +4,34 @@ import { ref } from 'vue'
 import { useTodoList } from '@/composables/useTodoList'
 
 // inputの値と連動するリアクティブ関数を作成
-const todo = ref('')
-const todoList = ref<{ id: number; task: string }[]>([])
+const todo = ref<string | undefined>()
 const isEdit = ref(false)
-let editId = -1
-
-const ls = localStorage.todoList
-
-todoList.value = ls ? JSON.parse(ls) : []
+const { todoList, add, show, edit, del } = useTodoList()
 
 const addTodo = () => {
-  const id = new Date().getTime()
+  if (!todo.value) return
 
-  todoList.value.push({ id: id, task: todo.value })
-  //   console.log(todo.value)
-  localStorage.todoList = JSON.stringify(todoList.value)
-
+  add(todo.value)
   todo.value = ''
 }
 
 const showTodo = (id: number) => {
-  const findTodo = todoList.value.find((todo) => todo.id === id)
-
-  if (findTodo) {
-    todo.value = findTodo.task
+  todo.value = show(id)
+  if (todo.value) {
     isEdit.value = true
-    editId = id
   }
 }
 
 const editTodo = () => {
-  const findTodo = todoList.value.find((todo) => todo.id === editId)
-
-  const idx = todoList.value.findIndex((todo) => todo.id === editId)
-
-  if (findTodo) {
-    findTodo.task = todo.value
-
-    // 対象オブジェクトを置き換え
-    todoList.value.splice(idx, 1, findTodo)
-
-    // localStorageに保存
-    localStorage.todoList = JSON.stringify(todoList.value)
-
-    // 初期値を元に戻す
-    isEdit.value = false
-    editId = -1
-    todo.value = ''
-  }
+  if (!todo.value) return
+  edit(todo.value)
+  isEdit.value = false
+  todo.value = ''
 }
 
 const deleteTodo = (id: number) => {
   isEdit.value = false
-  editId = -1
-  todo.value = ''
-
-  const { findTodo, idx } = useTodoList(id)
-
-  if (findTodo) {
-    const delMsg = '「' + findTodo.task + '」を削除しますか？'
-    if (!confirm(delMsg)) return
-
-    todoList.value.splice(idx, 1)
-    localStorage.todoList = JSON.stringify(todoList.value)
-  }
+  del(id)
 }
 </script>
 
