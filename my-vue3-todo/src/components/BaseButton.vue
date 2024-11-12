@@ -1,6 +1,6 @@
 <script setup lang="ts">
 type Props = {
-  color?: string
+  color: 'blue' | 'green' | 'pink'
 }
 
 type Emits = {
@@ -28,7 +28,7 @@ const handleClick = (str: string, id: number) => {
   border-radius: 6px;
 }
 
-.blur {
+.blue {
   background-color: #03a9f4;
 }
 

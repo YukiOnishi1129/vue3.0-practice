@@ -2,7 +2,11 @@
 import { ref } from 'vue'
 
 import { useTodoList } from '@/composables/useTodoList'
-import BaseButton from '@/components/BaseButton.vue'
+
+import ButtonAdd from '@/components/ButtonAdd.vue'
+import ButtonDel from '@/components/ButtonDel.vue'
+import ButtonEdit from '@/components/ButtonEdit.vue'
+import ButtonShow from '@/components/ButtonShow.vue'
 
 // inputの値と連動するリアクティブ関数を作成
 const todo = ref<string | undefined>()
@@ -43,8 +47,8 @@ const changeCheck = (id: number) => {
 <template>
   <div>
     <input type="text" class="todo_input" v-model="todo" placeholder="+ TODOを入力" />
-    <BaseButton color="green" @on-click="editTodo" v-if="isEdit">変更</BaseButton>
-    <BaseButton color="blue" @on-click="addTodo" v-else>追加</BaseButton>
+    <ButtonEdit @edit-click="editTodo" v-if="isEdit" />
+    <ButtonAdd @add-click="addTodo" v-else />
   </div>
 
   <div class="box_list">
@@ -59,8 +63,8 @@ const changeCheck = (id: number) => {
         <label>{{ todo.task }}</label>
       </div>
       <div class="btns">
-        <BaseButton color="green" @on-click="showTodo(todo.id)">編</BaseButton>
-        <BaseButton color="pink" @on-click="deleteTodo(todo.id)">削</BaseButton>
+        <ButtonShow @show-click="showTodo(todo.id)" />
+        <ButtonDel @del-click="deleteTodo(todo.id)" />
       </div>
     </div>
   </div>
@@ -79,21 +83,6 @@ const changeCheck = (id: number) => {
   font-size: 18px;
   border: 1px solid #aaa;
   border-radius: 6px;
-}
-
-.btn {
-  position: relative;
-  padding: 6px 8px;
-  font-size: 14px;
-  color: #fff;
-  text-align: center;
-  background-color: #03a9f4;
-  border: 1px solid #eee;
-  border-radius: 6px;
-}
-
-.btn:active {
-  top: 1px;
 }
 
 .box_list {
@@ -124,14 +113,6 @@ const changeCheck = (id: number) => {
 .btns {
   display: flex;
   gap: 4px;
-}
-
-.green {
-  background-color: #00c853;
-}
-
-.pink {
-  background-color: #ff4081;
 }
 
 .fin {
