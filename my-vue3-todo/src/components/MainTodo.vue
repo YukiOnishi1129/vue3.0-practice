@@ -9,6 +9,10 @@ const todo = ref<string | undefined>()
 const isEdit = ref(false)
 const { todoList, add, show, edit, del, check, countFin } = useTodoList()
 
+const test = (str: string, id: number) => {
+  console.log('test', str, id)
+}
+
 const addTodo = () => {
   if (!todo.value) return
 
@@ -41,7 +45,7 @@ const changeCheck = (id: number) => {
 </script>
 
 <template>
-  <BaseButton color="blue">追加</BaseButton>
+  <BaseButton color="blue" @on-click="test">追加</BaseButton>
   <BaseButton color="green">編</BaseButton>
   <BaseButton color="pink">削</BaseButton>
   <BaseButton color="green">変更</BaseButton>
