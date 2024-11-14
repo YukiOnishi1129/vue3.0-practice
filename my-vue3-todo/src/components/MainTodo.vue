@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref } from 'vue'
+import { onMounted, onUpdated, ref } from 'vue'
 
 import { useTodoList } from '@/composables/useTodoList'
 
@@ -7,6 +7,18 @@ import ButtonAdd from '@/components/ButtonAdd.vue'
 import ButtonDel from '@/components/ButtonDel.vue'
 import ButtonEdit from '@/components/ButtonEdit.vue'
 import ButtonShow from '@/components/ButtonShow.vue'
+
+const inpSetup = document.getElementById('inp')
+console.log('inpSetup', inpSetup)
+
+onMounted(() => {
+  const inpMount = document.getElementById('inp')
+  console.log('inpMount', inpMount)
+})
+
+onUpdated(() => {
+  console.log('onUpdated', todo.value)
+})
 
 // inputの値と連動するリアクティブ関数を作成
 const todo = ref<string | undefined>()
@@ -46,7 +58,7 @@ const changeCheck = (id: number) => {
 
 <template>
   <div>
-    <input type="text" class="todo_input" v-model="todo" placeholder="+ TODOを入力" />
+    <input id="inp" type="text" class="todo_input" v-model="todo" placeholder="+ TODOを入力" />
     <ButtonEdit @edit-click="editTodo" v-if="isEdit" />
     <ButtonAdd @add-click="addTodo" v-else />
   </div>
