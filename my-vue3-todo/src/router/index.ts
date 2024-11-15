@@ -27,8 +27,8 @@ const router = createRouter({
     },
     {
       path: '/blog/:id',
-      name: 'blogId',
-      component: () => import('@/views/BlogPage.vue'),
+      name: 'blogDetail',
+      component: () => import('@/views/BlogDetailPage.vue'),
     },
     {
       path: '/:pathMatch(.*)*',
