@@ -1,6 +1,5 @@
 import { createRouter, createWebHistory } from 'vue-router'
 
-import AboutPage from '@/views/AboutPage.vue'
 import MainTodo from '@/views/MainTodo.vue'
 
 const router = createRouter({
@@ -20,6 +19,11 @@ const router = createRouter({
       path: '/about',
       name: 'about',
       component: () => import('@/views/AboutPage.vue'),
+    },
+    {
+      path: '/:pathMatch(.*)*',
+      name: 'notFound',
+      component: () => import('@/views/NotFound.vue'),
     },
   ],
 })
